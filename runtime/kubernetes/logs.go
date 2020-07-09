@@ -9,6 +9,7 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/micro/go-micro/v2/logger"
 	"github.com/micro/go-micro/v2/runtime"
 	"github.com/micro/go-micro/v2/util/kubernetes/client"
 	"github.com/micro/go-micro/v2/util/log"
@@ -21,6 +22,7 @@ type klog struct {
 }
 
 func (k *klog) podLogStream(podName string, stream *kubeStream) error {
+	logger.Infof("klog.podLogStream %v", podName)
 	p := make(map[string]string)
 	p["follow"] = "true"
 
@@ -97,6 +99,7 @@ func (k *klog) getMatchingPods() ([]string, error) {
 }
 
 func (k *klog) Read() ([]runtime.LogRecord, error) {
+	logger.Infof("klog.Read namespace %v service name %v count %v", k.options.Namespace, k.serviceName, k.options.Count)
 	pods, err := k.getMatchingPods()
 	if err != nil {
 		return nil, err

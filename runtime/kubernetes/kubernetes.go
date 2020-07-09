@@ -6,6 +6,7 @@ import (
 	"sync"
 	"time"
 
+	"github.com/micro/go-micro/v2/logger"
 	log "github.com/micro/go-micro/v2/logger"
 	"github.com/micro/go-micro/v2/runtime"
 	"github.com/micro/go-micro/v2/util/kubernetes/client"
@@ -332,6 +333,7 @@ func (k *kubernetes) Init(opts ...runtime.Option) error {
 
 func (k *kubernetes) Logs(s *runtime.Service, options ...runtime.LogsOption) (runtime.LogStream, error) {
 	klo := newLog(k.client, s.Name, options...)
+	logger.Info("kubernetes.Logs count %", klo.options.Count)
 	stream, err := klo.Stream()
 	if err != nil {
 		return nil, err
