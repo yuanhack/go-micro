@@ -68,7 +68,7 @@ func (b *Basic) Inspect(t string) (*auth.Account, error) {
 	// lookup the token in the store
 	recs, err := b.store.Read(StorePrefix + t)
 	if err == store.ErrNotFound {
-		return nil, token.ErrInvalidToken
+		return nil, fmt.Errorf("Token not found")
 	} else if err != nil {
 		return nil, err
 	}

@@ -2,6 +2,7 @@ package jwt
 
 import (
 	"encoding/base64"
+	"fmt"
 	"time"
 
 	"github.com/dgrijalva/jwt-go"
@@ -82,16 +83,16 @@ func (j *JWT) Inspect(t string) (*auth.Account, error) {
 		return jwt.ParseRSAPublicKeyFromPEM(pub)
 	})
 	if err != nil {
-		return nil, token.ErrInvalidToken
+		return nil, fmt.Errorf("%v: %v", token.ErrInvalidToken, err)
 	}
 
 	// validate the token
 	if !res.Valid {
-		return nil, token.ErrInvalidToken
+		return nil, fmt.Errorf("Parsing failed: %v", token.ErrInvalidToken)
 	}
 	claims, ok := res.Claims.(*authClaims)
 	if !ok {
-		return nil, token.ErrInvalidToken
+		return nil, fmt.Errorf("Type assert failed %v", token.ErrInvalidToken)
 	}
 
 	// return the token
