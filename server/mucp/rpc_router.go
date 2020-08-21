@@ -515,7 +515,7 @@ func (router *router) ProcessMessage(ctx context.Context, msg server.Message) (e
 		if r := recover(); r != nil {
 			log.Errorf("panic recovered: %v", r)
 			log.Error(string(debug.Stack()))
-			err = merrors.InternalServerError("go.micro.server", "panic recovered: %v", r)
+			err = merrors.InternalServerError("go.micro.server", "panic recovered 3: %v", string(debug.Stack()))
 		}
 	}()
 
