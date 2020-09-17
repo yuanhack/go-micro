@@ -179,7 +179,6 @@ func (g *grpcClient) stream(ctx context.Context, addr string, req client.Request
 	} else {
 		dialCtx, cancel = context.WithCancel(ctx)
 	}
-	defer cancel()
 
 	wc := wrapCodec{cf}
 
