@@ -11,6 +11,8 @@ import (
 	"regexp"
 	"strings"
 	"testing"
+
+	"github.com/micro/go-micro/v3/util/kubernetes/client"
 )
 
 func setupClient(t *testing.T) {
@@ -66,14 +68,22 @@ func TestNamespaceCreateDelete(t *testing.T) {
 	}
 }
 
-func TestNetworkPolicyCreateDelete(t *testing.T) {
+// This tests the generic CreateResource and DeleteResource methods with a networkpolicy:
+func TestResourceCreateDelete(t *testing.T) {
 	defer func() {
 		exec.Command("kubectl", "-n", "baz", "delete", "networkpolicy", "ingress").Run()
 		exec.Command("kubectl", "delete", "namespace", "baz").Run()
 	}()
 	setupClient(t)
 	r := NewRuntime()
-	if err := r.CreateNamespace("baz"); err != nil {
+	if err := r.CreateResource(&client.Resource{
+		Kind: "namespace",
+		Value: client.Namespace{
+			Metadata: &client.Metadata{
+				Name: "baz",
+			},
+		},
+	}); err != nil {
 		t.Fatalf("Unexpected error creating namespace %s", err)
 	}
 
@@ -81,7 +91,19 @@ func TestNetworkPolicyCreateDelete(t *testing.T) {
 		t.Fatalf("Namespace baz not found")
 	}
 
-	if err := r.CreateNetworkPolicy("baz"); err != nil {
+	if err := r.CreateResource(&client.Resource{
+		Kind: "networkpolicy",
+		Name: "ingress",
+		Value: client.NetworkPolicy{
+			AllowedLabels: map[string]string{
+				"owner": "test",
+			},
+			Metadata: &client.Metadata{
+				Name:      "ingress",
+				Namespace: "baz",
+			},
+		},
+	}); err != nil {
 		t.Fatalf("Unexpected error creating networkpolicy %s", err)
 	}
 
@@ -89,7 +111,19 @@ func TestNetworkPolicyCreateDelete(t *testing.T) {
 		t.Fatalf("NetworkPolicy baz.ingress not found")
 	}
 
-	if err := r.DeleteNetworkPolicy("baz"); err != nil {
+	if err := r.DeleteResource(&client.Resource{
+		Kind: "networkpolicy",
+		Name: "ingress",
+		Value: client.NetworkPolicy{
+			AllowedLabels: map[string]string{
+				"owner": "test",
+			},
+			Metadata: &client.Metadata{
+				Name:      "ingress",
+				Namespace: "baz",
+			},
+		},
+	}); err != nil {
 		t.Fatalf("Unexpected error creating networkpolicy %s", err)
 	}
 
@@ -97,7 +131,14 @@ func TestNetworkPolicyCreateDelete(t *testing.T) {
 		t.Fatalf("NetworkPolicy baz.ingress still exists")
 	}
 
-	if err := r.DeleteNamespace("foobar"); err != nil {
+	if err := r.DeleteResource(&client.Resource{
+		Kind: "namespace",
+		Value: client.Namespace{
+			Metadata: &client.Metadata{
+				Name: "baz",
+			},
+		},
+	}); err != nil {
 		t.Fatalf("Unexpected error deleting namespace %s", err)
 	}
 	if namespaceExists(t, "baz") {

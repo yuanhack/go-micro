@@ -4,6 +4,8 @@ package runtime
 import (
 	"errors"
 	"time"
+
+	"github.com/micro/go-micro/v3/util/kubernetes/client"
 )
 
 var (
@@ -18,10 +20,10 @@ type Runtime interface {
 	CreateNamespace(string) error
 	// DeleteNamespace deletes a namespace in the runtime
 	DeleteNamespace(string) error
-	// CreateNetworkPolicy creates a NetworkPolicy for a given namespace
-	CreateNetworkPolicy(string) error
-	// DeleteNetworkPolicy deletes a NetworkPolicy for a given namespace
-	DeleteNetworkPolicy(string) error
+	// CreateResource creates a runtime resource
+	CreateResource(*client.Resource, ...client.CreateOption) error
+	// DeleteResource deletes a runtime resource
+	DeleteResource(*client.Resource, ...client.DeleteOption) error
 	// Create registers a service
 	Create(*Service, ...CreateOption) error
 	// Read returns the service

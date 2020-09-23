@@ -15,6 +15,7 @@ import (
 	"github.com/micro/go-micro/v3/logger"
 	"github.com/micro/go-micro/v3/runtime"
 	"github.com/micro/go-micro/v3/runtime/local/source/git"
+	"github.com/micro/go-micro/v3/util/kubernetes/client"
 )
 
 // defaultNamespace to use if not provided as an option
@@ -697,12 +698,12 @@ func (r *localRuntime) DeleteNamespace(ns string) error {
 	return nil
 }
 
-func (r *localRuntime) CreateNetworkPolicy(string) error {
+func (r *localRuntime) CreateResource(*client.Resource, ...client.CreateOption) error {
 	// noop
 	return nil
 }
 
-func (r *localRuntime) DeleteNetworkPolicy(string) error {
+func (r *localRuntime) DeleteResource(*client.Resource, ...client.DeleteOption) error {
 	// noop
 	return nil
 }

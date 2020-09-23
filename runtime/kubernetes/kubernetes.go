@@ -737,43 +737,23 @@ func (k *kubernetes) DeleteNamespace(ns string) error {
 	return err
 }
 
-func (k *kubernetes) CreateNetworkPolicy(ns string) error {
-	err := k.client.Create(&client.Resource{
-		Kind: "networkpolicy",
-		Value: client.NetworkPolicy{
-			AllowedLabels: map[string]string{
-				"owner": "micro",
-			},
-			Metadata: &client.Metadata{
-				Name:      "ingress",
-				Namespace: ns,
-			},
-		},
-	})
+// CreateResource creates a runtime resource
+func (k *kubernetes) CreateResource(resource *client.Resource, options ...client.CreateOption) error {
+	err := k.client.Create(resource, options...)
 	if err != nil {
 		if logger.V(logger.ErrorLevel, logger.DefaultLogger) {
-			logger.Errorf("Error creating networkpolicy %v.ingress: %v", ns, err)
+			logger.Errorf("Error creating resource: %v", err)
 		}
 	}
 	return err
 }
 
-func (k *kubernetes) DeleteNetworkPolicy(ns string) error {
-	err := k.client.Delete(&client.Resource{
-		Kind: "networkpolicy",
-		Value: client.NetworkPolicy{
-			AllowedLabels: map[string]string{
-				"owner": "micro",
-			},
-			Metadata: &client.Metadata{
-				Name:      "ingress",
-				Namespace: ns,
-			},
-		},
-	})
+// DeleteResource deletes a runtime resource
+func (k *kubernetes) DeleteResource(resource *client.Resource, options ...client.DeleteOption) error {
+	err := k.client.Delete(resource, options...)
 	if err != nil {
 		if logger.V(logger.ErrorLevel, logger.DefaultLogger) {
-			logger.Errorf("Error deleting networkpolicy %v.ingress: %v", ns, err)
+			logger.Errorf("Error deleting resource: %v", err)
 		}
 	}
 	return err
