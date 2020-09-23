@@ -66,6 +66,45 @@ func TestNamespaceCreateDelete(t *testing.T) {
 	}
 }
 
+func TestNetworkPolicyCreateDelete(t *testing.T) {
+	defer func() {
+		exec.Command("kubectl", "-n", "baz", "delete", "networkpolicy", "ingress").Run()
+		exec.Command("kubectl", "delete", "namespace", "baz").Run()
+	}()
+	setupClient(t)
+	r := NewRuntime()
+	if err := r.CreateNamespace("baz"); err != nil {
+		t.Fatalf("Unexpected error creating namespace %s", err)
+	}
+
+	if !namespaceExists(t, "baz") {
+		t.Fatalf("Namespace baz not found")
+	}
+
+	if err := r.CreateNetworkPolicy("baz"); err != nil {
+		t.Fatalf("Unexpected error creating networkpolicy %s", err)
+	}
+
+	if !networkPolicyExists(t, "baz", "ingress") {
+		t.Fatalf("NetworkPolicy baz.ingress not found")
+	}
+
+	if err := r.DeleteNetworkPolicy("baz"); err != nil {
+		t.Fatalf("Unexpected error creating networkpolicy %s", err)
+	}
+
+	if networkPolicyExists(t, "baz", "ingress") {
+		t.Fatalf("NetworkPolicy baz.ingress still exists")
+	}
+
+	if err := r.DeleteNamespace("foobar"); err != nil {
+		t.Fatalf("Unexpected error deleting namespace %s", err)
+	}
+	if namespaceExists(t, "baz") {
+		t.Fatalf("Namespace baz still exists")
+	}
+}
+
 func namespaceExists(t *testing.T, ns string) bool {
 	cmd := exec.Command("kubectl", "get", "namespaces")
 	outp, err := cmd.Output()
@@ -77,5 +116,17 @@ func namespaceExists(t *testing.T, ns string) bool {
 		t.Fatalf("Error listing namespaces %s", err)
 	}
 	return exists
+}
 
+func networkPolicyExists(t *testing.T, ns, np string) bool {
+	cmd := exec.Command("kubectl", "-n", ns, "get", "networkpolicy")
+	outp, err := cmd.Output()
+	if err != nil {
+		t.Fatalf("Unexpected error listing networkpolicies %s", err)
+	}
+	exists, err := regexp.Match(np, outp)
+	if err != nil {
+		t.Fatalf("Error listing networkpolicies %s", err)
+	}
+	return exists
 }

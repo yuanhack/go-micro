@@ -696,3 +696,13 @@ func (r *localRuntime) DeleteNamespace(ns string) error {
 	// noop
 	return nil
 }
+
+func (r *localRuntime) CreateNetworkPolicy(string) error {
+	// noop
+	return nil
+}
+
+func (r *localRuntime) DeleteNetworkPolicy(string) error {
+	// noop
+	return nil
+}

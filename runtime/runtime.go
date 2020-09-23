@@ -18,6 +18,10 @@ type Runtime interface {
 	CreateNamespace(string) error
 	// DeleteNamespace deletes a namespace in the runtime
 	DeleteNamespace(string) error
+	// CreateNetworkPolicy creates a NetworkPolicy for a given namespace
+	CreateNetworkPolicy(string) error
+	// DeleteNetworkPolicy deletes a NetworkPolicy for a given namespace
+	DeleteNetworkPolicy(string) error
 	// Create registers a service
 	Create(*Service, ...CreateOption) error
 	// Read returns the service

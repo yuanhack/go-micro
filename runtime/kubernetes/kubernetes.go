@@ -737,6 +737,48 @@ func (k *kubernetes) DeleteNamespace(ns string) error {
 	return err
 }
 
+func (k *kubernetes) CreateNetworkPolicy(ns string) error {
+	err := k.client.Create(&client.Resource{
+		Kind: "networkpolicy",
+		Value: client.NetworkPolicy{
+			AllowedLabels: map[string]string{
+				"owner": "micro",
+			},
+			Metadata: &client.Metadata{
+				Name:      "ingress",
+				Namespace: ns,
+			},
+		},
+	})
+	if err != nil {
+		if logger.V(logger.ErrorLevel, logger.DefaultLogger) {
+			logger.Errorf("Error creating networkpolicy %v.ingress: %v", ns, err)
+		}
+	}
+	return err
+}
+
+func (k *kubernetes) DeleteNetworkPolicy(ns string) error {
+	err := k.client.Delete(&client.Resource{
+		Kind: "networkpolicy",
+		Value: client.NetworkPolicy{
+			AllowedLabels: map[string]string{
+				"owner": "micro",
+			},
+			Metadata: &client.Metadata{
+				Name:      "ingress",
+				Namespace: ns,
+			},
+		},
+	})
+	if err != nil {
+		if logger.V(logger.ErrorLevel, logger.DefaultLogger) {
+			logger.Errorf("Error deleting networkpolicy %v.ingress: %v", ns, err)
+		}
+	}
+	return err
+}
+
 // transformStatus takes a deployment status (deploymentcondition.type) and transforms it into a
 // runtime service status, e.g. containercreating => starting
 func transformStatus(depStatus string) runtime.ServiceStatus {

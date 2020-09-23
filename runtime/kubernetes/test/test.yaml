@@ -16,6 +16,7 @@ rules:
       - services
       - secrets
       - namespaces
+      - networkpolicys
     verbs:
       - get
       - create
