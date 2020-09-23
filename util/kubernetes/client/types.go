@@ -248,3 +248,9 @@ type ResourceLimits struct {
 	CPU              string `json:"cpu,omitempty"`
 	EphemeralStorage string `json:"ephemeral-storage,omitempty"`
 }
+
+// NetworkPolicy is a Kubernetes Namespace
+type NetworkPolicy struct {
+	AllowedLabels map[string]string `json:"allowedLabels,omitempty"`
+	Metadata      *Metadata         `json:"metadata,omitempty"`
+}
