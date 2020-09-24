@@ -81,6 +81,7 @@ func (j *JSONValues) Scan(v interface{}) error {
 	if err != nil {
 		return err
 	}
+	fmt.Println("yo", v, string(b))
 	return json.Unmarshal(b, v)
 }
 
