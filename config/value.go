@@ -199,6 +199,7 @@ func (j *JSONValue) Scan(v interface{}) error {
 	if err != nil {
 		return err
 	}
+	fmt.Println("yo1", v, string(b))
 	return json.Unmarshal(b, v)
 }
 
