@@ -1,12 +1,12 @@
 package client
 
 var templates = map[string]string{
-	"deployment":     deploymentTmpl,
-	"service":        serviceTmpl,
-	"namespace":      namespaceTmpl,
-	"secret":         secretTmpl,
-	"serviceaccount": serviceAccountTmpl,
-	"networkpolicy":  networkPolicyTmpl,
+	"deployment":      deploymentTmpl,
+	"service":         serviceTmpl,
+	"namespace":       namespaceTmpl,
+	"secret":          secretTmpl,
+	"serviceaccount":  serviceAccountTmpl,
+	"networkpolicies": networkPolicyTmpl,
 }
 
 var deploymentTmpl = `
