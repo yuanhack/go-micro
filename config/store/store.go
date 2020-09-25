@@ -1,4 +1,5 @@
-package storeconfig
+// Package store
+package store
 
 import (
 	"github.com/micro/go-micro/v3/config"
@@ -20,16 +21,6 @@ func newConfig(store store.Store, key string) (*conf, error) {
 		store: store,
 		key:   key,
 	}, nil
-}
-
-func mergeOptions(old config.Options, nu ...config.Option) config.Options {
-	n := config.Options{
-		Secret: old.Secret,
-	}
-	for _, opt := range nu {
-		opt(&n)
-	}
-	return n
 }
 
 func (c *conf) Get(path string, options ...config.Option) (config.Value, error) {
