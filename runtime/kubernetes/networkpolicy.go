@@ -9,7 +9,7 @@ import (
 // createNetworkPolicy creates a networkpolicy resource
 func (k *kubernetes) createNetworkPolicy(networkPolicy *runtime.NetworkPolicy) error {
 	err := k.client.Create(&client.Resource{
-		Kind: "networkpolicies",
+		Kind: "networkpolicy",
 		Value: client.NetworkPolicy{
 			AllowedLabels: networkPolicy.AllowedLabels,
 			Metadata: &client.Metadata{
@@ -17,7 +17,7 @@ func (k *kubernetes) createNetworkPolicy(networkPolicy *runtime.NetworkPolicy) e
 				Namespace: networkPolicy.Namespace,
 			},
 		},
-	})
+	}, client.CreateNamespace(networkPolicy.Namespace))
 	if err != nil {
 		if logger.V(logger.ErrorLevel, logger.DefaultLogger) {
 			logger.Errorf("Error creating resource %s: %v", networkPolicy.ID(), err)
@@ -29,7 +29,7 @@ func (k *kubernetes) createNetworkPolicy(networkPolicy *runtime.NetworkPolicy) e
 // updateNetworkPolicy updates a networkpolicy resource in-place
 func (k *kubernetes) updateNetworkPolicy(networkPolicy *runtime.NetworkPolicy) error {
 	err := k.client.Update(&client.Resource{
-		Kind: "networkpolicies",
+		Kind: "networkpolicy",
 		Value: client.NetworkPolicy{
 			AllowedLabels: networkPolicy.AllowedLabels,
 			Metadata: &client.Metadata{
@@ -37,7 +37,7 @@ func (k *kubernetes) updateNetworkPolicy(networkPolicy *runtime.NetworkPolicy) e
 				Namespace: networkPolicy.Namespace,
 			},
 		},
-	})
+	}, client.UpdateNamespace(networkPolicy.Namespace))
 	if err != nil {
 		if logger.V(logger.ErrorLevel, logger.DefaultLogger) {
 			logger.Errorf("Error updating resource %s: %v", networkPolicy.ID(), err)
@@ -49,7 +49,7 @@ func (k *kubernetes) updateNetworkPolicy(networkPolicy *runtime.NetworkPolicy) e
 // deleteNetworkPolicy deletes a networkpolicy resource
 func (k *kubernetes) deleteNetworkPolicy(networkPolicy *runtime.NetworkPolicy) error {
 	err := k.client.Delete(&client.Resource{
-		Kind: "networkpolicies",
+		Kind: "networkpolicy",
 		Value: client.NetworkPolicy{
 			AllowedLabels: networkPolicy.AllowedLabels,
 			Metadata: &client.Metadata{
@@ -57,7 +57,7 @@ func (k *kubernetes) deleteNetworkPolicy(networkPolicy *runtime.NetworkPolicy) e
 				Namespace: networkPolicy.Namespace,
 			},
 		},
-	})
+	}, client.DeleteNamespace(networkPolicy.Namespace))
 	if err != nil {
 		if logger.V(logger.ErrorLevel, logger.DefaultLogger) {
 			logger.Errorf("Error deleting resource %s: %v", networkPolicy.ID(), err)

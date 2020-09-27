@@ -7,6 +7,7 @@ var templates = map[string]string{
 	"secret":          secretTmpl,
 	"serviceaccount":  serviceAccountTmpl,
 	"networkpolicies": networkPolicyTmpl,
+	"networkpolicy":   networkPolicyTmpl,
 }
 
 var deploymentTmpl = `
@@ -227,7 +228,7 @@ imagePullSecrets:
 `
 
 var networkPolicyTmpl = `
-apiVersion: v1
+apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
   name: "{{ .Metadata.Name }}"

@@ -645,7 +645,7 @@ func (k *kubernetes) Delete(resource runtime.Resource, opts ...runtime.DeleteOpt
 		if !ok {
 			return runtime.ErrInvalidResource
 		}
-		return k.createNamespace(namespace)
+		return k.deleteNamespace(namespace)
 	case runtime.TypeNetworkPolicy:
 		// Assert the resource back into a *runtime.NetworkPolicy
 		networkPolicy, ok := resource.(*runtime.NetworkPolicy)
