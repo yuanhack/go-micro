@@ -47,7 +47,6 @@ import (
 	brokerSrv "github.com/macheal/go-micro/v2/broker/service"
 
 	// registries
-	"github.com/macheal/go-micro/v2/registry/etcd"
 	"github.com/macheal/go-micro/v2/registry/mdns"
 	rmem "github.com/macheal/go-micro/v2/registry/memory"
 	regSrv "github.com/macheal/go-micro/v2/registry/service"
