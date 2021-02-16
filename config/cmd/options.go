@@ -3,18 +3,18 @@ package cmd
 import (
 	"context"
 
-	"github.com/micro/go-micro/v2/auth"
-	"github.com/micro/go-micro/v2/broker"
-	"github.com/micro/go-micro/v2/client"
-	"github.com/micro/go-micro/v2/client/selector"
-	"github.com/micro/go-micro/v2/config"
-	"github.com/micro/go-micro/v2/debug/profile"
-	"github.com/micro/go-micro/v2/debug/trace"
-	"github.com/micro/go-micro/v2/registry"
-	"github.com/micro/go-micro/v2/runtime"
-	"github.com/micro/go-micro/v2/server"
-	"github.com/micro/go-micro/v2/store"
-	"github.com/micro/go-micro/v2/transport"
+	"github.com/macheal/go-micro/v2/auth"
+	"github.com/macheal/go-micro/v2/broker"
+	"github.com/macheal/go-micro/v2/client"
+	"github.com/macheal/go-micro/v2/client/selector"
+	"github.com/macheal/go-micro/v2/config"
+	"github.com/macheal/go-micro/v2/debug/profile"
+	"github.com/macheal/go-micro/v2/debug/trace"
+	"github.com/macheal/go-micro/v2/registry"
+	"github.com/macheal/go-micro/v2/runtime"
+	"github.com/macheal/go-micro/v2/server"
+	"github.com/macheal/go-micro/v2/store"
+	"github.com/macheal/go-micro/v2/transport"
 )
 
 type Options struct {
