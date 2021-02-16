@@ -341,9 +341,9 @@ var (
 
 	DefaultRegistries = map[string]func(...registry.Option) registry.Registry{
 		"service": regSrv.NewRegistry,
-		"etcd":    etcd.NewRegistry,
-		"mdns":    mdns.NewRegistry,
-		"memory":  rmem.NewRegistry,
+		//"etcd":    etcd.NewRegistry,
+		"mdns":   mdns.NewRegistry,
+		"memory": rmem.NewRegistry,
 	}
 
 	DefaultSelectors = map[string]func(...selector.Option) selector.Selector{
