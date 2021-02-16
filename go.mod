@@ -69,6 +69,7 @@ require (
 	golang.org/x/time v0.0.0-20191024005414-555d28b269f0 // indirect
 	google.golang.org/genproto v0.0.0-20210212180131-e7f2df4ecc2d
 	google.golang.org/grpc v1.35.0
+	google.golang.org/grpc/examples v0.0.0-20210212222430-425d405f3928
 	google.golang.org/protobuf v1.25.0
 	gopkg.in/telegram-bot-api.v4 v4.6.4
 	sigs.k8s.io/yaml v1.1.0 // indirect
