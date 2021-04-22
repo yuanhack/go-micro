@@ -57,6 +57,29 @@ func (m *service) Watch() (w source.Watcher, err error) {
 
 // Write is unsupported
 func (m *service) Write(cs *source.ChangeSet) error {
+	client := proto.NewConfigService(m.serviceName, m.opts.Client)
+	change := proto.Change{
+		Namespace: m.namespace,
+		Path:      m.path,
+		ChangeSet: &proto.ChangeSet{
+			Data:      string(cs.Data),
+			Checksum:  cs.Checksum,
+			Format:    cs.Format,
+			Source:    cs.Source,
+			Timestamp: cs.Timestamp.Unix(),
+		},
+	}
+	_, err := client.Create(context.Background(), &proto.CreateRequest{
+		Change: &change,
+	})
+	if err != nil {
+		_, err = client.Update(context.Background(), &proto.UpdateRequest{
+			Change: &change,
+		})
+		if err != nil {
+			return err
+		}
+	}
 	return nil
 }
 
