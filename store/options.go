@@ -74,6 +74,8 @@ type ReadOptions struct {
 	Limit uint
 	// Offset when combined with Limit supports pagination
 	Offset uint
+	// Context should contain all implementation specific options, using context.WithValue.
+	Context context.Context
 }
 
 // ReadOption sets values in ReadOptions
@@ -123,6 +125,8 @@ type WriteOptions struct {
 	Expiry time.Time
 	// TTL is the time until the record expires
 	TTL time.Duration
+	// Context should contain all implementation specific options, using context.WithValue.
+	Context context.Context
 }
 
 // WriteOption sets values in WriteOptions
@@ -178,6 +182,8 @@ type ListOptions struct {
 	Limit uint
 	// Offset when combined with Limit supports pagination
 	Offset uint
+	// Context should contain all implementation specific options, using context.WithValue.
+	Context context.Context
 }
 
 // ListOption sets values in ListOptions
