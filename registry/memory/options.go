@@ -3,7 +3,7 @@ package memory
 import (
 	"context"
 
-	"github.com/micro/go-micro/v2/registry"
+	"github.com/macheal/go-micro/v2/registry"
 )
 
 type servicesKey struct{}

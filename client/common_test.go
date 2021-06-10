@@ -1,7 +1,7 @@
 package client
 
 import (
-	"github.com/micro/go-micro/v2/registry"
+	"github.com/macheal/go-micro/v2/registry"
 )
 
 var (
