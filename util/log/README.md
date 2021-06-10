@@ -10,8 +10,8 @@ Set the logger for micro libraries
 
 ```go
 // import go-micro/util/log
-import "github.com/micro/go-micro/util/log"
+import "github.com/macheal/go-micro/util/log"
 
-// SetLogger expects github.com/micro/go-micro/debug/log.Log interface
+// SetLogger expects github.com/macheal/go-micro/debug/log.Log interface
 log.SetLogger(mylogger)
 ```
